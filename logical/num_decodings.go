@@ -5,6 +5,13 @@ import (
 	"unicode"
 )
 
+// NumDecodings
+//
+// # Dynamic Programming Solution
+//
+// Space Complexity: O(n)
+//
+// Time Complexity: O(n)
 func NumDecodings(s string) int {
 	for _, c := range s {
 		if !unicode.IsDigit(c) {
