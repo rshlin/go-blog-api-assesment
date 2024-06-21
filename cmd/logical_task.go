@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/rshlin/go-blog-api-assesment/logical"
 	"github.com/spf13/cobra"
 	"log"
 )
@@ -12,7 +13,7 @@ var logicalTestCmd = &cobra.Command{
 	Long:  `This command takes a string of digits and returns the number of ways it can be decoded back into its original message.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		input, _ := cmd.Flags().GetString("digits")
-		fmt.Printf("Number of ways to decode message: %d\n", numDecodings(input))
+		fmt.Printf("Number of ways to decode message: %d\n", logical.NumDecodings(input))
 	},
 }
 
@@ -25,8 +26,4 @@ func init() {
 	if err := logicalTestCmd.MarkFlagRequired("digits"); err != nil {
 		log.Fatalf("Error marking digits flag as required: %v", err)
 	}
-}
-
-func numDecodings(s string) int {
-	return 0
 }
