@@ -6,3 +6,6 @@ build:
 
 test:
 	go test -v ./...
+
+gen_openapi:
+	go generate ./...
