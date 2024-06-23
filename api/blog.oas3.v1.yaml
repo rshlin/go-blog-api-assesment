@@ -16,11 +16,13 @@ paths:
             type: integer
             minimum: 1
           description: Page number
+          required: true
         - in: query
           name: size
           schema:
             type: integer
           description: Number of items per page
+          required: true
       responses:
         '200':
           description: Successful operation
