@@ -1,0 +1,381 @@
+openapi: 3.0.0
+info:
+  title: Blog Platform API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /posts:
+    get:
+      operationId: getPosts
+      summary: Retrieve a list of all blog posts
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+          description: Page number
+        - in: query
+          name: size
+          schema:
+            type: integer
+          description: Number of items per page
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPosts'
+              examples:
+                pagination:
+                  value:
+                    meta:
+                      page: 1
+                      size: 10
+                      total: 100
+                    data:
+                      - id: 1
+                        title: "Title 1"
+                        content: "Content 1"
+                        author: "Author 1"
+                      - id: 2
+                        title: "Title 2"
+                        content: "Content 2"
+                        author: "Author 2"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                error:
+                  value:
+                    msg: "Bad request"
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                error:
+                  value:
+                    msg: "Server error"
+    post:
+      operationId: createPost
+      summary: Create a new blog post
+      security:
+        - BasicAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+            examples:
+              post:
+                value:
+                  title: "Title 1"
+                  content: "Content 1"
+                  author: "Author 1"
+      responses:
+        '201':
+          description: Post created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+              examples:
+                post:
+                  value:
+                    id: 1
+                    title: "Title 1"
+                    content: "Content 1"
+                    author: "Author 1"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                error:
+                  value:
+                    msg: "Bad request"
+        '401':
+          description: Not authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                error:
+                  value:
+                    msg: "Not authorized"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                error:
+                  value:
+                    msg: "Forbidden"
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                error:
+                  value:
+                    msg: "Server error"
+  /posts/{id}:
+    get:
+      operationId: getPostById
+      summary: Retrieve details of a specific blog post
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Post ID
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+              examples:
+                post:
+                  value:
+                    id: 1
+                    title: "Title 1"
+                    content: "Content 1"
+                    author: "Author 1"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                error:
+                  value:
+                    msg: "Bad request"
+        '404':
+          description: Post not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                error:
+                  value:
+                    msg: "Post not found"
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                error:
+                  value:
+                    msg: "Server error"
+    put:
+      operationId: updatePost
+      summary: Update an existing blog post
+      security:
+        - BasicAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Post ID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+            examples:
+              post:
+                value:
+                  title: "Updated Title"
+                  content: "Updated Content"
+                  author: "Updated Author"
+      responses:
+        '200':
+          description: Post updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+              examples:
+                post:
+                  value:
+                    id: 1
+                    title: "Updated Title"
+                    content: "Updated Content"
+                    author: "Updated Author"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                error:
+                  value:
+                    msg: "Bad request"
+        '401':
+          description: Not authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                error:
+                  value:
+                    msg: "Not authorized"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                error:
+                  value:
+                    msg: "Forbidden"
+        '404':
+          description: Post not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                error:
+                  value:
+                    msg: "Post not found"
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                error:
+                  value:
+                    msg: "Server error"
+    delete:
+      operationId: deletePost
+      summary: Delete a blog post
+      security:
+        - BasicAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Post ID
+      responses:
+        '204':
+          description: Post deleted
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                error:
+                  value:
+                    msg: "Bad request"
+        '401':
+          description: Not authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                error:
+                  value:
+                    msg: "Not authorized"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                error:
+                  value:
+                    msg: "Forbidden"
+        '404':
+          description: Post not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                error:
+                  value:
+                    msg: "Post not found"
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                error:
+                  value:
+                    msg: "Server error"
+components:
+  schemas:
+    Post:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        content:
+          type: string
+        author:
+          type: string
+    PaginatedPosts:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            page:
+              type: integer
+            size:
+              type: integer
+            total:
+              type: integer
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Post'
+    Error:
+      type: object
+      properties:
+        msg:
+          type: string
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
