@@ -68,12 +68,12 @@ paths:
       operationId: createPost
       summary: Create a new blog post
       security:
-        - BasicAuth: []
+        - BasicAuth: [ ]
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Post'
+              $ref: '#/components/schemas/CreatePost'
             examples:
               post:
                 value:
@@ -193,7 +193,7 @@ paths:
       operationId: updatePost
       summary: Update an existing blog post
       security:
-        - BasicAuth: []
+        - BasicAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -280,7 +280,7 @@ paths:
       operationId: deletePost
       summary: Delete a blog post
       security:
-        - BasicAuth: []
+        - BasicAuth: [ ]
       parameters:
         - in: path
           name: id
@@ -354,6 +354,24 @@ components:
           type: string
         author:
           type: string
+      required:
+        - id
+        - title
+        - content
+        - author
+    CreatePost:
+      type: object
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+        author:
+          type: string
+      required:
+        - title
+        - content
+        - author
     PaginatedPosts:
       type: object
       properties:
@@ -366,15 +384,24 @@ components:
               type: integer
             total:
               type: integer
+          required:
+            - page
+            - size
+            - total
         data:
           type: array
           items:
             $ref: '#/components/schemas/Post'
+      required:
+        - meta
+        - data
     Error:
       type: object
       properties:
         msg:
           type: string
+      required:
+        - msg
   securitySchemes:
     BasicAuth:
       type: http
