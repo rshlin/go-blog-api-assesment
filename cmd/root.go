@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var rootCmd = &cobra.Command{
+var RootCmd = &cobra.Command{
 	Use:   "app",
 	Short: "Backend Developer Skill Assessment",
 	Long: `This application contains two commands to complete the Backend Developer Skill Assessment:
@@ -15,7 +15,7 @@ var rootCmd = &cobra.Command{
 }
 
 func Execute() {
-	err := rootCmd.Execute()
+	err := RootCmd.Execute()
 	if err != nil {
 		os.Exit(1)
 	}

@@ -20,7 +20,7 @@ var logicalTestCmd = &cobra.Command{
 var digits string
 
 func init() {
-	rootCmd.AddCommand(logicalTestCmd)
+	RootCmd.AddCommand(logicalTestCmd)
 
 	logicalTestCmd.Flags().StringVarP(&digits, "digits", "d", "", "string of digits to decode (required)")
 	if err := logicalTestCmd.MarkFlagRequired("digits"); err != nil {

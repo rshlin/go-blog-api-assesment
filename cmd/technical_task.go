@@ -69,7 +69,7 @@ var appConfigPath string
 var initialBlogPostsJsonPath string
 
 func init() {
-	rootCmd.AddCommand(technicalTestCmd)
+	RootCmd.AddCommand(technicalTestCmd)
 
 	// server args
 	technicalTestCmd.Flags().StringVarP(&address, "address", "a", "127.0.0.1", "bind address for the server")
