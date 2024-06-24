@@ -28,6 +28,14 @@ func NewInMemoryBlogRepository(opts ...Option) *InMemoryBlogRepository {
 	return r
 }
 
+func WithConfig(cfg *InMemoryConfig) Option {
+	return func(repository *InMemoryBlogRepository) {
+		for _, post := range cfg.Posts {
+			repository.store.Store(post.Id, post)
+		}
+	}
+}
+
 func (r *InMemoryBlogRepository) FindAll(ctx context.Context, page int, pageSize int) (*model.PaginatedPosts, error) {
 	if page < 1 || pageSize < 1 {
 		return nil, errors.New("invalid page or pageSize")
@@ -114,7 +122,7 @@ func (r *InMemoryBlogRepository) Update(ctx context.Context, author model.Author
 		return nil, errors.New("failed to type assert post")
 	}
 	if existingPost.Author != author {
-		return nil, error2.NewError(error2.NotAuthorized, "not authorized", nil)
+		return nil, error2.NewError(error2.Forbidden, "not authorized", nil)
 	}
 	r.store.Store(post.Id, post)
 	return &post, nil
@@ -130,7 +138,7 @@ func (r *InMemoryBlogRepository) Delete(ctx context.Context, author model.Author
 		return errors.New("failed to type assert post")
 	}
 	if existingPost.Author != author {
-		return error2.NewError(error2.NotAuthorized, "not authorized", nil)
+		return error2.NewError(error2.Forbidden, "not authorized", nil)
 	}
 	r.store.Delete(id)
 	return nil
