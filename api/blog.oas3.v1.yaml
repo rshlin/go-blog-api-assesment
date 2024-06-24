@@ -377,7 +377,7 @@ components:
     PaginatedPosts:
       type: object
       properties:
-        meta:
+        pageMetadata:
           type: object
           properties:
             page:
