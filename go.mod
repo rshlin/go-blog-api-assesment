@@ -5,6 +5,7 @@ go 1.22.3
 require (
 	github.com/getkin/kin-openapi v0.124.0
 	github.com/gorilla/mux v1.8.1
+	github.com/mitchellh/mapstructure v1.5.0
 	github.com/oapi-codegen/oapi-codegen/v2 v2.3.0
 	github.com/oapi-codegen/runtime v1.1.1
 	github.com/spf13/cobra v1.8.1
