@@ -24,6 +24,8 @@ For example:
 
 Your solution should efficiently handle larger inputs as well.
 
+**SOLUTION**: see the [linked doc](./SOLUTION_1.md)
+
 2. Technical test:
 
 Implement a REST API in Golang
@@ -57,3 +59,5 @@ Implement a REST API in Golang
   PUT /posts/{id}: Update an existing blog post.
 
   DELETE /posts/{id}: Delete a blog post.
+
+**SOLUTION**: see the [linked doc](./SOLUTION_2.md)
